@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    triggers {
+    githubPush()
+    }
     tools {
         maven "MAVEN3"
         jdk "OracleJDK8"
@@ -35,13 +38,13 @@ pipeline{
         
         stage('Test'){
             steps{
-                sh 'mvn test'
+                sh 'mvn -s settings.xml test'
             }
         }
 
         stage('Checkstyle Analysis'){
             steps{
-                sh 'mvn checkstyle:checkstyle'
+                sh 'mvn -s settings.xml checkstyle:checkstyle'
             }
         }
     }
